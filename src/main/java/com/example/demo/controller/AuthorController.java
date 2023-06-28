@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Author;
 import com.example.demo.services.AuthorService;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
