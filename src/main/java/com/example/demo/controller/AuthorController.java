@@ -14,22 +14,22 @@ public class AuthorController {
 //    @Autowired
     private AuthorService authorService;
     //save
-    @PostMapping("/authors")
+    @PostMapping("/save-authors")
     public Author saveAuthor(@Validated @RequestBody Author author){
         return authorService.saveAuthor(author);
     }
     //READ
-    @GetMapping ("/authors")
+    @GetMapping ("/read-authors")
     public List<Author> readAuthor_List() {
         return authorService.readAuthor_List() /*"id: " + getId() + " Author Name: " + author.getName() + "A Books written by this Author are: " + author.getBooks()*/;
     }
     //update
-    @PutMapping("/authors/{id}")
+    @PutMapping("/update-authors/{id}")
     public Author updateAuthor(@RequestBody Author author, @PathVariable("id") Long id){
         return authorService.updateAuthor(author, id);
     }
     //delete
-    @DeleteMapping("/authors/{id}")
+    @DeleteMapping("/delete-authors/{id}")
     public String deleteAuthorByName(@PathVariable("id") Long id){
         authorService.deleteAuthorByName(id);
         return "Deleted!";

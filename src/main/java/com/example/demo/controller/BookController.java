@@ -11,22 +11,22 @@ import java.util.List;
 public class BookController {
     private BookService bookService;
     //save
-    @PostMapping("/books")
+    @PostMapping("/save-books")
     public Book saveBook(@Validated @RequestBody Book book){
         return bookService.saveBook(book);
     }
     //Read
-    @GetMapping("/books")
+    @GetMapping("/read-books")
     public List<Book> readBook_List() {
         return bookService.readBook_List() /*"id: " + getId() + " Author Name: " + author.getName() + "A Books written by this Author are: " + author.getBooks()*/;
     }
     //update
-    @PutMapping("/books/{id}")
+    @PutMapping("/update-books/{id}")
     public Book updateBook(@RequestBody Book book, @PathVariable("id") Long id){
         return bookService.updateBook(book, id);
     }
     //delete
-    @DeleteMapping("/books/{id}")
+    @DeleteMapping("/delete-books/{id}")
     public String deleteBookByTitle(@PathVariable("id") Long id){
         bookService.deleteBookByTitle(id);
         return "Book Deleted!";
