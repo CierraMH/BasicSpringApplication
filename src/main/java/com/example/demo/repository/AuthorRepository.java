@@ -6,6 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author,Long>, CrudRepository<Author,Long> {
-    //Long id, String name, List<Book> books
+public interface AuthorRepository extends JpaRepository<Author,Long>{
 }

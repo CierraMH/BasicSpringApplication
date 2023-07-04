@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Authors</title>
+</head>
+<body>
+
+<h2>Authors</h2>
+
+<a href="/authors/create">Create new author</a>
+
+<table>
+    <tr>
+        <th scope="col">"ID"</th>
+        <th scope="col">Name</th>
+        <th scope="col">Books</th>
+    </tr>
+    <tr th:each="author : ${authors}">
+        <td th:text="${author.id}"></td>
+        <td th:text="${author.name}"></td>
+        <td>
+            <ul >
+                <li th:each="book : ${author.books}" th:text="${book.title}"></li>
+            </ul>
+        </td>
+        <td>
+            <form th:action="@{/authors/{id}/update(id=${author.id})}" method="get">
+                <input type="submit" th:value="Update">
+            </form>
+            <form th:action="@{/authors/{id}/delete(id=${author.id})}" method="post">
+                <input type="submit" th:value="Delete">
+            </form>
+            <form th:action="@{/authors/{id}(id=${author.id})}" method="get">
+                <input type="submit" th:value="View-Details">
+            </form>
+        </td>
+    </tr>
+</table>
+<a href="/books">View Books</a>
+Back to Home Page <a href="/">Home Page</a>
+</body>
+</html>

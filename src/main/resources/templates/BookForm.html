@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Book Form</title>
 </head>
 <body>
 <h2>Book Form</h2>
-<p><a href="/books/read-books"></a>List of Books</p>
-<p><a href="/books/save-books">Create New Book Details</a></p>
-<p><a href="/books/update-books/">Update Book</a></p>
-<p><a href="/books/delete-books/">Delete Book</a></p>
+<form th:action="@{/books(id=${book.id})}" th:object="${book}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" th:field="*{title}" id="title">
+    <label for="author">Author:</label>
+    <select th:field="*{author}" id="author">
+        <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}"></option>
+    </select>
+    <input type="submit" th:value="Submit">
+</form>
 
 <p>Back to Home Page <a href="/">Home Page</a></p>
 </body>

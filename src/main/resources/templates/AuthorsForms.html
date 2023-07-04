@@ -1,24 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"; xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Author Form</title>
 </head>
 <body>
 <h2>Author Form</h2>
-<p><a href="/authors/read-authors">List of Authors</a></p>
-<form action="#" th:action="@{/authors/save-authors}" th:object="${author}" method="post">
-    <label th:text="#{}">Name:</label>
-    <input type="text" id="name" name="name"><br><br>
-    <label for="book">Book:</label>
-    <input type="text" id="book" name="book"><br><br>
+<p><a href="/authors">List of Authors</a></p>
+<form th:action="@{/authors(id=${author.id})}" th:object="${author}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name" >
     <input type="submit" value="Submit">
-    <p><a href="/authors/save-authors">Save</a></p>
 </form>
-
-
-<p><a href="/authors/update-authors/">Update</a></p>
-<p><a href="/authors/delete-authors/">Delete Author by ID</a></p>
 
 <p>Back to Home Page <a href="/">Home Page</a></p>
 </body>

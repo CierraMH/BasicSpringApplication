@@ -1,37 +1,66 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Author;
-import com.example.demo.services.AuthorService;
-// import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import com.example.demo.repository.AuthorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-//import static sun.security.pkcs11.wrapper.Functions.getId;
 
-@RestController
+@Controller
 @RequestMapping("/authors")
 public class AuthorController {
-//    @Autowired
-    private AuthorService authorService;
-    //save
-    @PostMapping("/save-authors")
-    public Author saveAuthor(@Validated @RequestBody Author author){
-        return authorService.saveAuthor(author);
+  @Autowired private AuthorRepository authorRepository;
+
+    //save/create
+    @PostMapping
+    public String saveAuthor(@ModelAttribute Author saveAuthors){
+        authorRepository.save(saveAuthors);
+        return "redirect:/authors";
     }
-    //READ
-    @GetMapping ("/read-authors")
-    public List<Author> readAuthor_List() {
-        return authorService.readAuthor_List() /*"id: " + getId() + " Author Name: " + author.getName() + "A Books written by this Author are: " + author.getBooks()*/;
+    //read authors
+    @GetMapping
+    public String readAuthors(Model model) {
+        List<Author> authors = authorRepository.findAll();
+        model.addAttribute("authors", authors);
+        return "readAuthors";
+    }
+    //read by ID
+    @GetMapping("/{id}")
+    public String readByID(@PathVariable("id") Long id, Model model){
+        Author authorWithId = authorRepository.findById(id).orElseThrow();
+        model.addAttribute("author", authorWithId);
+        return "read-authorsID";
     }
     //update
-    @PutMapping("/update-authors/{id}")
-    public Author updateAuthor(@RequestBody Author author, @PathVariable("id") Long id){
-        return authorService.updateAuthor(author, id);
+    @PostMapping("/{id}")
+    public String updateAuthor(@PathVariable("id") Long id, @RequestBody Author authorUpdate){
+        authorRepository.findById(id).map(author -> {
+            author.setName(authorUpdate.getName());
+            return authorRepository.save(author);
+        }).orElseThrow();
+           return "redirect:/authors";
     }
     //delete
-    @DeleteMapping("/delete-authors/{id}")
-    public String deleteAuthorByName(@PathVariable("id") Long id){
-        authorService.deleteAuthorByName(id);
-        return "Deleted!";
+    @PostMapping("/{id}/delete")
+    public String deleteAuthor(@PathVariable("id") Long id){
+        authorRepository.deleteById(id);
+        return "redirect:/authors";
     }
+
+    //create form
+    @GetMapping("/create")
+    public String createForm(Model model){
+        model.addAttribute("author", new Author());
+        return "AuthorsForms";
+    }
+    //update form
+    @GetMapping("/{id}/update")
+    public String updateForm(@PathVariable Long id, Model model){
+        Author author = authorRepository.findById(id).orElseThrow();
+        model.addAttribute("author", author);
+        return "AuthorsForms";
+    }
+
 }
